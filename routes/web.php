@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Url;
+use App\Http\Controllers\UrlController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('homepage');
 });
+
+Route::get('/urls', function () {
+    return view('urls')
+        ->with('urls', Url::all());
+});
+
+Route::post('/url', [UrlController::class, 'update']);
+
+Route::get('/urls/{url}', function (Url $url) {
+    return view('url')
+        ->with('url', $url);
+})->name('urlsList');
